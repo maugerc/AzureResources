@@ -20,8 +20,11 @@ namespace AzureResources
         private static void Main()
         {
             VirtualMachines = new List<VirtualMachine>();
+
+            // Get Azure identification (clientID, tenantID, Email, Password and SubscriptionID)
             var azureConf = AzureConfiguration.GetAzureConfig();
 
+            // Instanciate authentification service with config value
             IAuthentificationService authentificationService = new AuthentificationService(
                 azureConf.ClientId,
                 azureConf.TenantId,
@@ -29,9 +32,13 @@ namespace AzureResources
                 azureConf.Password,
                 azureConf.SubscriptionId);
 
+            // Get classic virtual machine with API V1
             GetOldVirtualMachines(authentificationService);
+
+            // Get news virtual machine with API V2
             GetNewVirtualMachines(authentificationService, azureConf.SubscriptionId);
 
+            // Log in Console the returned data
             Console.WriteLine("Name - Status");
 
             foreach (var virtualMachine in VirtualMachines)
@@ -41,18 +48,26 @@ namespace AzureResources
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Get classic virtual machine with API V1
+        /// </summary>
         private static void GetOldVirtualMachines(IAuthentificationService authentificationService)
         {
+            // Get Token from Authentification Service
             SubscriptionCloudCredentials credV1 = authentificationService.Auth<TokenCloudCredentials>().Result;
 
+            // Create client with the token
             using (var client = new v1.ComputeManagementClient(credV1))
             {
+                // Loop on Hosted Service
                 Parallel.ForEach(client.HostedServices.ListAsync(new CancellationToken()).Result.ToList(),
                     cs =>
                 {
+                    // Get Deployement in each Hosted Service
                     Parallel.ForEach(client.HostedServices.GetDetailedAsync(cs.ServiceName, new CancellationToken()).Result.Deployments.ToList(),
                         deployment =>
                         {
+                            // Add Virtual Machien object for each virtual machine in deployement
                             VirtualMachines.AddRange(deployment.RoleInstances.Select(v => new VirtualMachine
                             {
                                 Name = v.InstanceName,
@@ -62,10 +77,16 @@ namespace AzureResources
                 });
             }
         }
+
+        /// <summary>
+        /// Get news virtual machine with API V2
+        /// </summary>
         private static void GetNewVirtualMachines(IAuthentificationService authentificationService, string suscriptionId)
         {
+            // Get Token from Authentification Service
             ServiceClientCredentials credV2 = authentificationService.Auth<TokenCredentials>().Result;
 
+            // Create client with the token
             using (var client = new v2.ComputeManagementClient(credV2))
             {
                 client.SubscriptionId = suscriptionId;
@@ -76,18 +97,21 @@ namespace AzureResources
                 {
                     if (result == null)
                     {
+                        // Get all news virtual machine
                         result = client.VirtualMachines.ListAllWithHttpMessagesAsync().Result;
                         response.Add(result);
                     }
                     else
                     {
+                        // If more than one page, we continue to get virtual machine
                         nextPage = client.VirtualMachines.ListAllNextWithHttpMessagesAsync(result.Body.NextPageLink).Result;
                         result = nextPage;
                         response.Add(result);
                     }
                 } while (result.Body.NextPageLink != null);
                 
-                Parallel.ForEach(response.ToList(), r =>
+                // Loop on response and add in list each time
+                foreach(var r in response.ToList())
                 {
                     VirtualMachines.AddRange(r.Body.ToList().Select(b =>
                         new VirtualMachine
@@ -96,7 +120,7 @@ namespace AzureResources
                             Status = "..."
                         })
                     );
-                });
+                };
             }
         }
     }

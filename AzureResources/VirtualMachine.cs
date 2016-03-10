@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AzureResources
 {
+    /// <summary>
+    /// Virtual Machine object 
+    /// </summary>
     public class VirtualMachine
     {
         public string Name { get; set; }

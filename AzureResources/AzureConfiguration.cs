@@ -5,6 +5,7 @@ namespace AzureResources
 {
     public static class AzureConfiguration
     {
+        // Read AzureConfig.json file, for get config
         public static AzureConfigModel GetAzureConfig()
         {
             AzureConfigModel azureConfigModel;

@@ -23,6 +23,9 @@ namespace AzureResources
             _subscriptionId = subscriptionId;
         }
         
+        /// <summary>
+        /// Return token authnetification
+        /// </summary>
         public async Task<T> Auth<T>()
         {
             var context = new AuthenticationContext(string.Format("https://login.microsoftonline.com/{0}", _tenantId));
@@ -38,6 +41,9 @@ namespace AzureResources
             // Get the token within the response
             string token = authentificationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);
 
+            // Return different type in terms of T type
+            // for the old vm, we need to return TokenCloudCredentials type
+            // else we return TokenCredentials
             if (typeof(T) == typeof(TokenCloudCredentials))
             {
                 return (T)Convert.ChangeType(new TokenCloudCredentials(_subscriptionId, token), typeof(T));
