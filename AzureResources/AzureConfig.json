@@ -1,0 +1,7 @@
+﻿{
+  "ClientId": "_clientId",
+  "TenantId": "_tenantId",
+  "Email": "_email",
+  "Password": "_password",
+  "SubscriptionId": "_subscriptionId"
+}
