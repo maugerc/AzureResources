@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
+using System.Security;
 
 namespace AzureResources
 {
@@ -22,7 +23,7 @@ namespace AzureResources
             _password = password;
             _subscriptionId = subscriptionId;
         }
-        
+
         /// <summary>
         /// Return token authnetification
         /// </summary>
@@ -36,7 +37,7 @@ namespace AzureResources
 
                // The client ID from portal WAAD application UX
                clientId: _clientId,
-               userCredential: new UserCredential(_email, _password));
+               userCredential: new UserPasswordCredential(_email, _password));
 
             // Get the token within the response
             string token = authentificationResult.CreateAuthorizationHeader().Substring("Bearer ".Length);

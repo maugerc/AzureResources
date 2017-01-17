@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Threading.Tasks;
 
 namespace AzureResources
 {

@@ -10,10 +10,12 @@ using v2 = Microsoft.Azure.Management.Compute;
 using v2Models = Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
+using System.Security;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace AzureResources
 {
-    class Program
+    static class Program
     {
         public static List<VirtualMachine> VirtualMachines { get; set; }
 
@@ -39,11 +41,11 @@ namespace AzureResources
             GetNewVirtualMachines(authentificationService, azureConf.SubscriptionId);
 
             // Log in Console the returned data
-            Console.WriteLine("Name - Status");
+            Console.WriteLine("Type - Name - Status");
 
             foreach (var virtualMachine in VirtualMachines)
             {
-                Console.WriteLine(virtualMachine.Name + " - " + virtualMachine.Status);
+                Console.WriteLine(virtualMachine.TypeMachine + " - " + virtualMachine.Name + " - " + virtualMachine.Status);
             }
             Console.ReadLine();
         }
@@ -71,7 +73,8 @@ namespace AzureResources
                             VirtualMachines.AddRange(deployment.RoleInstances.Select(v => new VirtualMachine
                             {
                                 Name = v.InstanceName,
-                                Status = v.InstanceStatus
+                                Status = v.PowerState.ToString(),
+                                TypeMachine = TypeMachineEnum.ASM
                             }));
                         });
                 });
@@ -81,7 +84,7 @@ namespace AzureResources
         /// <summary>
         /// Get news virtual machine with API V2
         /// </summary>
-        private static void GetNewVirtualMachines(IAuthentificationService authentificationService, string suscriptionId)
+        private static void GetNewVirtualMachines(IAuthentificationService authentificationService, string subscriptionId)
         {
             // Get Token from Authentification Service
             ServiceClientCredentials credV2 = authentificationService.Auth<TokenCredentials>().Result;
@@ -89,7 +92,7 @@ namespace AzureResources
             // Create client with the token
             using (var client = new v2.ComputeManagementClient(credV2))
             {
-                client.SubscriptionId = suscriptionId;
+                client.SubscriptionId = subscriptionId;
                 AzureOperationResponse<IPage<v2Models.VirtualMachine>> result = null, nextPage;
                 var response = new List<AzureOperationResponse<IPage<v2Models.VirtualMachine>>>();
 
@@ -109,15 +112,16 @@ namespace AzureResources
                         response.Add(result);
                     }
                 } while (result.Body.NextPageLink != null);
-                
+
                 // Loop on response and add in list each time
-                foreach(var r in response.ToList())
+                foreach (var r in response.ToList())
                 {
                     VirtualMachines.AddRange(r.Body.ToList().Select(b =>
                         new VirtualMachine
                         {
                             Name = b.Name,
-                            Status = "..."
+                            Status = client.VirtualMachines.GetWithHttpMessagesAsync("MyC", b.Name, v2Models.InstanceViewTypes.InstanceView).Result.Body.InstanceView.Statuses[1].DisplayStatus ?? "No status",
+                            TypeMachine = TypeMachineEnum.ARM
                         })
                     );
                 };
