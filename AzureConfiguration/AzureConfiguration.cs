@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Text;
 
-namespace AzureResourcesLib
+namespace Utils
 {
     public static class AzureConfiguration
     {

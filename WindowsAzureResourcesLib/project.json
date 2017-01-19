@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "AzureConfiguration": "1.0.0-*",
+    "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.8",
+    "NETStandard.Library": "1.6.1"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": [ "dnxcore50" ]
+    }
+  }
+}

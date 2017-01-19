@@ -1,7 +1,8 @@
-﻿{
+{
   "version": "1.0.0",
 
   "dependencies": {
+    "AzureConfiguration": "1.0.0-*",
     "Microsoft.Azure.Management.Compute.Fluent": "1.0.0-beta4-1",
     "Microsoft.Azure.Management.Fluent": "1.0.0-beta4-1",
     "NETStandard.Library": "1.6.1"
