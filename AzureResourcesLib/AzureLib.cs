@@ -25,14 +25,16 @@ namespace AzureResourcesLib
                 .Authenticate(credentials)
                 .WithSubscription(conf.SubscriptionId);
 
-            List<string> machines = new List<string>();
+            return azure.VirtualMachines.List().Select(vm => vm.Name + " " + vm.InstanceView?.Statuses[1]?.DisplayStatus ?? "No power state" ).ToList();
 
-            foreach (var machine in azure.VirtualMachines.List())
-            {
-                machines.Add(machine.Name + " " + machine.InstanceView?.Statuses[1]?.DisplayStatus ?? "No power state");
-            }
+            //List<string> machines = new List<string>();
 
-            return machines;
+            //foreach (var machine in azure.VirtualMachines.List())
+            //{
+            //    machines.Add(machine.Name + " " + machine.InstanceView?.Statuses[1]?.DisplayStatus ?? "No power state");
+            //}
+
+            //return machines;
         }
     }
 }
