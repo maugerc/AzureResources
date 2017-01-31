@@ -4,12 +4,13 @@
   "dependencies": {
     "AzureConfiguration": "1.0.0-*",
     "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.8",
+    "Microsoft.WindowsAzure.Management.Compute": "13.0.0",
     "NETStandard.Library": "1.6.1"
   },
 
   "frameworks": {
     "netstandard1.6": {
-      "imports": [ "dnxcore50" ]
+      "imports": [ "net4.5", "dnxcore50" ]
     }
   }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿using Microsoft.Azure;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.WindowsAzure.Management.Compute;
 using System;
 using Utils;
 
@@ -19,9 +21,9 @@ namespace WindowsAzureResourcesLib
                 throw new InvalidOperationException("Could not get the token");
             }
 
-            //SubscriptionCloudCredentials cred = new TokenCloudCredentials(token.AccessToken);
+            SubscriptionCloudCredentials cred = new TokenCloudCredentials(token.AccessToken);
 
-            //var client = new ComputeManagementClient(cred);
+            var client = new ComputeManagementClient(cred);
 
 
 
