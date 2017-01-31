@@ -6,18 +6,23 @@ namespace Utils
 {
     public static class AzureConfiguration
     {
-        // Read AzureConfig.json file, for get config
-        public static AzureConfigModel GetAzureConfig()
+        public static string Path
         {
-            return JsonConvert.DeserializeObject<AzureConfigModel>(File.ReadAllText(@"wwwroot\AzureConfig.json"));
+            get
+            {
+                return @"wwwroot\AzureConfig.json";
+            }
         }
-    }
 
-    public class AzureConfigModel
-    {
-        public string ClientId { get; set; }
-        public string ClientSecret { get; set; }
-        public string TenantId { get; set; }
-        public string SubscriptionId { get; set; }
+        // Read AzureConfig.json file, for get config
+        public static AzureConfigurationModel GetAzureConfig()
+        {
+            return JsonConvert.DeserializeObject<AzureConfigurationModel>(ReadFile());
+        }
+
+        public static string ReadFile()
+        {
+            return File.ReadAllText(Path);
+        }
     }
 }
