@@ -15,6 +15,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WindowsAzureResourcesLib", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.Tests", "Utils.Tests\Utils.Tests.csproj", "{A0B2D1B2-B4AE-4B0A-B529-38A38E1BC662}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureResourcesLibTests", "AzureResourcesLibTests\AzureResourcesLibTests.csproj", "{864ECAF2-4E85-4B5B-8158-89A486F4C43A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{A0B2D1B2-B4AE-4B0A-B529-38A38E1BC662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0B2D1B2-B4AE-4B0A-B529-38A38E1BC662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0B2D1B2-B4AE-4B0A-B529-38A38E1BC662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{864ECAF2-4E85-4B5B-8158-89A486F4C43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{864ECAF2-4E85-4B5B-8158-89A486F4C43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{864ECAF2-4E85-4B5B-8158-89A486F4C43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{864ECAF2-4E85-4B5B-8158-89A486F4C43A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
