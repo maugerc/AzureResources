@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Utils
+namespace Econocom.MyCAzureRess
 {
     public static class AzureConfiguration
     {

@@ -2,9 +2,8 @@
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.WindowsAzure.Management.Compute;
 using System;
-using Utils;
 
-namespace WindowsAzureResourcesLib
+namespace Econocom.MyCAzureRess
 {
     public class WindowsAzureLib
     {

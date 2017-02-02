@@ -2,7 +2,7 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "Utils": "1.0.0-*",
+    "Econocom.MyCAzureRess.Utils": "1.0.0-*",
     "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.8",
     "Microsoft.WindowsAzure.Management.Compute": "13.0.0",
     "NETStandard.Library": "1.6.1"

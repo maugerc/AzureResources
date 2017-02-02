@@ -15,8 +15,8 @@
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
-    "AzureResourcesLib": "1.0.0",
-    "WindowsAzureResourcesLib": "1.0.0-*"
+    "Econocom.MyCAzureRess.ARMLib": "1.0.0",
+    "Econocom.MyCAzureRess.ASMLib": "1.0.0-*"
   },
 
   "tools": {

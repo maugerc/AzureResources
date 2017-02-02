@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AzureResourcesLib;
 
-namespace AzureResourcesAPI.Controllers
+namespace Econocom.MyCAzureRess
 {
     [Route("api/[controller]")]
     public class MachinesController : Controller
