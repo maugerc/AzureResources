@@ -7,12 +7,10 @@ namespace Econocom.MyCAzureRess
 {
     public class WindowsAzureLib
     {
-        public async void GetClassicMachine()
+        public async void GetClassicMachine(string clientId, string clientSecret, string tenantId)
         {
-            var conf = AzureConfiguration.GetAzureConfig();
-
-            var cc = new ClientCredential(conf.ClientId, conf.ClientSecret);
-            var context = new AuthenticationContext("https://login.windows.net/" + conf.TenantId);
+            var cc = new ClientCredential(clientId, clientSecret);
+            var context = new AuthenticationContext("https://login.windows.net/" + tenantId);
             var token = await context.AcquireTokenAsync("https://management.azure.com/", cc);
 
             if (token == null)

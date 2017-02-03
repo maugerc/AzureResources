@@ -12,6 +12,8 @@ namespace Econocom.MyCAzureRess
 {
     public class Startup
     {
+        public IConfigurationRoot Configuration { get; set; }
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -22,11 +24,15 @@ namespace Econocom.MyCAzureRess
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add services required for using options
+            services.AddOptions();
+
+            // Register the IConfiguration instance which MyOptions binds against
+            services.Configure<AzureConfigurationModel>(Configuration.GetSection("CustomSetting:AzureConfig"));
+         
             // Add framework services.
             services.AddMvc();
         }

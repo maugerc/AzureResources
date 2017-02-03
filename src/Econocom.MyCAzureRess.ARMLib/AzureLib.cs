@@ -12,28 +12,21 @@ namespace Econocom.MyCAzureRess
 {
     public static class AzureLib
     {
-        public static List<string> GetArmMachine()
+        public static List<string> GetArmMachine(string clientId, string clientSecret, string tenantId, string subscriptionId)
         {
-            var conf = AzureConfiguration.GetAzureConfig();
-
-            AzureCredentials credentials = AzureCredentials.FromServicePrincipal(conf.ClientId, conf.ClientSecret, conf.TenantId, AzureEnvironment.AzureGlobalCloud);
+            AzureCredentials credentials = AzureCredentials
+                .FromServicePrincipal(clientId, clientSecret, tenantId,
+                AzureEnvironment.AzureGlobalCloud);
 
             var azure = Azure
                 .Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                 .Authenticate(credentials)
-                .WithSubscription(conf.SubscriptionId);
+                .WithSubscription(subscriptionId);
 
-            return azure.VirtualMachines.List().Select(vm => vm.Name + " " + vm.InstanceView?.Statuses[1]?.DisplayStatus ?? "No power state" ).ToList();
-
-            //List<string> machines = new List<string>();
-
-            //foreach (var machine in azure.VirtualMachines.List())
-            //{
-            //    machines.Add(machine.Name + " " + machine.InstanceView?.Statuses[1]?.DisplayStatus ?? "No power state");
-            //}
-
-            //return machines;
+            return azure.VirtualMachines.List().Select(vm =>
+                vm.Name + " " + vm.InstanceView?.Statuses[1]?.DisplayStatus ?? "No power state")
+                .ToList();
         }
     }
 }
